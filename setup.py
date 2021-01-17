@@ -1,4 +1,5 @@
 import setuptools
+
 from jiral.version import VERSION
 
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -15,12 +16,12 @@ setuptools.setup(
     url="https://github.com/AhnSeongHyun/jiral",
     packages=setuptools.find_packages(),
     entry_points={
-        'console_scripts': ['jiral=jiral.__main__:app'],
+        "console_scripts": ["jiral=jiral.__main__:app"],
     },
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.8',
+    python_requires=">=3.8",
 )
