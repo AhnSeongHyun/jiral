@@ -1,0 +1,11 @@
+[flake8]
+max-line-length = 110
+exclude = .tox,.git,*/migrations/*,*/static/CACHE/*,docs,node_modules
+extend-ignore =
+    E203, # https://www.flake8rules.com/rules/E203.html
+    E401, # https://www.flake8rules.com/rules/E401.html
+    E712, # https://www.flake8rules.com/rules/E712.html
+    E231, # https://www.flake8rules.com/rules/E231.html
+    E501, # https://www.flake8rules.com/rules/E501.html
+    E731, # https://www.flake8rules.com/rules/E731.html
+black-config = pyproject.toml
