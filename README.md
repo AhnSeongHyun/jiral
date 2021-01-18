@@ -19,6 +19,7 @@ jiral
 Server: https://YOUR-COMPANY.atlassian.net
 User: EMAIL_ADDRESS
 Token: TOKEN 
+saveed!! 🌮
 
 > jiral create issue --project="OD" --summary="Separate issue board"
 [OD-497] created!! 🌮
@@ -26,7 +27,7 @@ Token: TOKEN
 
 > jiral issue --project="OD" --limit=3
 ┏━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ KEY      ┃ SUMMARY                                       ┃
+┃ KEY      ┃ SUMMARY                                      ┃
 ┡━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
 │ OD-462   │ deploy github actions                        │
 │ OD-461   │ set env var                                  │
