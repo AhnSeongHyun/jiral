@@ -11,8 +11,8 @@ from jiral.service import assign_issue, create_jira_issue, login_jira, search_ji
 app = typer.Typer()
 create_app = typer.Typer()
 update_app = typer.Typer()
-app.add_typer(create_app, name="create")
-app.add_typer(update_app, name="update")
+app.add_typer(create_app, name="create", help="Create a new Jira issue")
+app.add_typer(update_app, name="update", help="Update an existing Jira issue")
 
 
 @update_app.command("issue")
@@ -22,6 +22,9 @@ def update_issue(
         ..., help="update status : TODO, IN_PROGRESS, IN_REVIEW, DONE", case_sensitive=False
     ),
 ):
+    """
+    Update jira issue
+    """
     is_task_completed = False
     console = Console()
     with console.status("[bold green]Working on tasks..."):
