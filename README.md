@@ -19,7 +19,7 @@ jiral
 Server: https://YOUR-COMPANY.atlassian.net
 User: EMAIL_ADDRESS
 Token: TOKEN 
-saveed!! 🌮
+saved!! 🌮
 
 > jiral create issue --project="OD" --summary="Separate issue board"
 [OD-497] created!! 🌮
