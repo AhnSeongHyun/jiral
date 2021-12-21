@@ -1,8 +1,6 @@
 jiral
 ======
-
-![CI](https://github.com/AhnSeongHyun/jiral/workflows/CI/badge.svg)
-
+> jira with cli
 
 ### Install 
 
@@ -33,4 +31,7 @@ saved!! 🌮
 │ OD-461   │ set env var                                  │
 │ OD-459   │ bugfix wrong parameters                      │
 └──────────┴──────────────────────────────────────────────┘
+
+> jiral update issue --issue-id="OD-461" --status="DONE"              
+ 
 ```

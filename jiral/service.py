@@ -1,10 +1,11 @@
-import json
 from typing import List
 
+import ujson
 from jira import JIRA, Issue
 from jira.resilientsession import raise_on_error
 
 from jiral.config import Config
+from jiral.entity.issue_staus import IssueStatus
 from jiral.entity.issue_type import IssueType
 
 
@@ -28,10 +29,20 @@ def create_jira_issue(
     )
 
 
+def update_jira_issue(jira: JIRA, issue_id: str, issue_status: IssueStatus) -> Issue:
+    issue = jira.issue(issue_id)
+    transitions = jira.transitions(issue)
+    for transition in transitions:
+        transition_name = transition["name"].upper().replace(" ", "")
+        if transition_name == issue_status.value:
+            jira.transition_issue(issue, transition["id"])
+            return issue
+
+
 def assign_issue(jira: JIRA, issue: Issue, account_id: str):
     # pre-port
     # ref.https://github.com/pycontribs/jira/blob/master/jira/client.py#L1572
     url = jira._options["server"] + "/rest/api/latest/issue/" + str(issue.key) + "/assignee"
     payload = {"accountId": account_id}
-    r = jira._session.put(url, data=json.dumps(payload))
+    r = jira._session.put(url, data=ujson.dumps(payload))
     raise_on_error(r)

@@ -3,21 +3,42 @@ from rich.console import Console
 
 from jiral.config import Config, load_config, save_config
 from jiral.display import show_issues
+from jiral.entity.issue_staus import IssueStatus
 from jiral.entity.issue_type import IssueType
 from jiral.exc import ConfigSaveError, JiraLoginError
-from jiral.service import assign_issue, create_jira_issue, login_jira, search_jira_issues
+from jiral.service import assign_issue, create_jira_issue, login_jira, search_jira_issues, update_jira_issue
 
 app = typer.Typer()
 create_app = typer.Typer()
+update_app = typer.Typer()
 app.add_typer(create_app, name="create")
+app.add_typer(update_app, name="update")
+
+
+@update_app.command("issue")
+def update_issue(
+    issue_id: str = typer.Option(..., help="issue id eg. JIRA-123", case_sensitive=False),
+    issue_status: IssueStatus = typer.Option(
+        ..., help="update status : TODO, IN_PROGRESS, IN_REVIEW, DONE", case_sensitive=False
+    ),
+):
+    is_task_completed = False
+    console = Console()
+    with console.status("[bold green]Working on tasks..."):
+        while not is_task_completed:
+            config = load_config()
+            jira = login_jira(config)
+            updated_issue = update_jira_issue(jira=jira, issue_id=issue_id, issue_status=issue_status)
+            is_task_completed = True
+    typer.echo(typer.style(f"[{updated_issue.key}] updated!! 🌮", fg=typer.colors.GREEN, bold=True))
 
 
 @create_app.command("issue")
 def create_issue(
-    project: str = typer.Option(..., help="project key"),
+    project: str = typer.Option(..., help="project key", case_sensitive=False),
     summary: str = typer.Option(..., help="issue summary"),
     desc: str = typer.Option(default="", help="issue desc"),
-    type: IssueType = typer.Option(default=IssueType.TASK, help="issue type"),
+    issue_type: IssueType = typer.Option(default=IssueType.TASK, help="issue type", case_sensitive=False),
 ):
     """
     Create jira issue and Assign to me
@@ -33,7 +54,7 @@ def create_issue(
                 project=project,
                 summary=summary,
                 description=desc,
-                issue_type=type,
+                issue_type=issue_type,
             )
             assign_issue(jira=jira, issue=new_issue, account_id=jira.myself()["accountId"])
             is_task_completed = True
@@ -42,7 +63,7 @@ def create_issue(
 
 @app.command()
 def issue(
-    project: str = typer.Option(..., help="project key"),
+    project: str = typer.Option(..., help="project key", case_sensitive=False),
     limit: int = typer.Option(help="limit", default=10),
 ):
     """
