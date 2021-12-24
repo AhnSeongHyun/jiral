@@ -1,3 +1,5 @@
+import webbrowser
+
 import typer
 from rich.console import Console
 
@@ -104,6 +106,13 @@ def config(
         typer.echo(typer.style("saved!! 🌮", fg=typer.colors.GREEN, bold=True))
     except (FileNotFoundError, ValueError, TypeError):
         raise ConfigSaveError
+
+
+@app.command()
+def open():
+    config = load_config()
+    url = config.server
+    webbrowser.open_new_tab(url)
 
 
 if __name__ == "__main__":
